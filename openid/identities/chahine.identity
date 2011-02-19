@@ -1,0 +1,95 @@
+; :mode=ini:
+; $Id: example.identity.dist 337 2010-11-20 01:49:36Z kmo $
+;
+;
+; SimpleID identity file.
+;
+; This file contains all the data associated with an identity.  It should
+; always be named username.identity, where username is the user name to be used
+; when logging into SimpleID.
+;
+; In this file, if a value contains non-numeric characters, you will need to
+; surround it with quotation characters.
+;
+
+;
+; The OpenID Identifier associated with this identity.  This is typically a
+; URL, although the OpenID specifications allow the use of URIs and even XRIs.
+;
+; Relying parties must be able to resolve the identity to obtain the address
+; of this SimpleID installation.
+;
+; WARNING: If you change the OpenID Identifier after you have used it in
+; SimpleID, you will need to delete all files named 'identity-*.cache' in the
+; cache directory.
+;
+; Examples:
+;    http://example.com/
+;    http://example.com:8888/
+;    http://example.com/myopenid
+;    https://example.com:8080/myopenid
+;
+identity="http://88.163.232.134/id/chahine/"
+
+;
+; The password associated with this identity.  This password is hashed using
+; the MD5 algorithm.
+;
+; There are various tools available which will give you the MD5 hash of any
+; given string.  If you have access to the command-line interface of PHP, you
+; can run the following command to give you the hash.
+;
+; php -r "print md5('example password');"
+;
+; Alternatively, you can upload the following PHP code to your web server, then
+; read off the hash with your web browser.  (This is recommended only if your
+; web server supports secure uploads (e.g. SFTP) and HTTPS, you that your
+; password is not sent over the Internet as clear text.)
+;
+; <?php header('Content-Type: text/plain'); print md5('example password'); ?>
+;
+; Alternatively, Wikipedia (http://en.wikipedia.org/wiki/MD5) has other resources
+; on generating this hash.
+;
+;pass="c8e24ae844b7cb9381g722ae8209a19a"
+pass="9faf6ddb489638d1beb759a91c165984"
+;pass="098f6bcd4621d373cade4e832627b4f6" ; "test"
+
+;
+; Whether this user is given administrative privileges in SimpleID.
+;
+; This setting has no effect in the current version of SimpleID.  However,
+; more functionality may be added to SimpleID in future versions which will
+; be restricted to SimpleID administrators.
+;
+; You should grant administrative privileges to at least one user.
+;
+; If you wish this user to be given administrative privileges, uncomment the
+; line below.
+;
+;administrator=1
+
+;
+; Simple Registration Extension data.
+;
+; If you want to provide registration data for consumers which support the
+; Simple Registration Extension, uncomment the section below and fill
+; in your details.
+;
+; Further information on the Simple Registration Extension can be found at
+; http://www.openidenabled.com/openid/simple-registration-extension
+;
+; Note, you must also enable the Simple Registration Extension in SimpleID.  To
+; do this, make sure the SIMPLEID_EXTENSIONS option in config.inc contains
+; sreg
+;
+[sreg]
+nickname="Chahine"
+email="chahine.moreau@gmail.com"
+fullname="Chahine"
+;dob="2000-00-00"
+;gender="M"
+;postcode="1234"
+;country="en"
+;language="en"
+;timezone="Australia/Sydney"
