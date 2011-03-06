@@ -1,73 +1,75 @@
     = Softwares =
 
-    |-------------------+------------------+----------------------------------------------------------------------------------------------------------------|
-    | _Function_        | _Solution_       | _Links_                                                                                                        |
-    |-------------------+------------------+----------------------------------------------------------------------------------------------------------------|
-    | Git server        | gitosis          | [https://wiki.archlinux.org/index.php/Gitosis]                                                                 |
-    |                   |                  | [http://www.git-attitude.fr/2010/07/18/heberger-un-serveur-git-avec-gitosis-linux-osx/]                        |
-    |-------------------+------------------+----------------------------------------------------------------------------------------------------------------|
-    | OpenID server     | simpleid         | [http://www.generation-linux.fr/index.php?post/2011/01/08/Soyez-votre-propre-fournisseur-OpenID-avec-SimpleID] |
-    |                   |                  | [http://wiki.openid.net/w/page/12995226/Run-your-own-identity-server]                                          |
-    |                   |                  | [http://simpleid.sourceforge.net]                                                                              |
-    |-------------------+------------------+----------------------------------------------------------------------------------------------------------------|
-    | Jabber server     | prosody          | [https://wiki.archlinux.org/index.php/Prosody]                                                                 |
-    |                   |                  | [http://prosody.im/doc/advanced_ssl_tls]                                                                       |
-    |-------------------+------------------+----------------------------------------------------------------------------------------------------------------|
-    | Time server       | ntpd             | [http://wiki.archlinux.org/index.php/Network_Time_Protocol]                                                    |
-    |                   |                  | [http://wiki.archlinux.org/index.php/Time]                                                                     |
-    |                   |                  | [http://en.gentoo-wiki.com/wiki/NTP]                                                                           |
-    |-------------------+------------------+----------------------------------------------------------------------------------------------------------------|
-    | Tor relay         | tor              | [https://wiki.archlinux.org/index.php/Tor]                                                                     |
-    |-------------------+------------------+----------------------------------------------------------------------------------------------------------------|
-    | Internet          | dnsmasq          | [http://wiki.archlinux.org/index.php/Dnsmasq]                                                                  |
-    |-------------------+------------------+----------------------------------------------------------------------------------------------------------------|
-    | Web server        | lighttpd         | [http://wiki.archlinux.org/index.php/Lighttpd]                                                                 |
-    |                   |                  | [http://wiki.archlinux.org/index.php/PhpMyAdmin]                                                               |
-    |                   |                  | [http://www.system-linux.eu/index.php?post/2009/01/03/Securiser-votre-phpini]                                  |
-    |                   |                  | [http://univers-libre.net/index.php/2010/05/xcache-dopez-votre-serveur-web/]                                   |
-    |                   |                  | [http://redmine.lighttpd.net/wiki/1/Docs:SSL]                                                                  |
-    |                   |                  | [https://wiki.archlinux.org/index.php/MySQL]                                                                   |
-    |                   |                  | [http://redmine.lighttpd.net/attachments/659/lighttpd.conf]                                                    |
-    |-------------------+------------------+----------------------------------------------------------------------------------------------------------------|
-    | Music             | mpd, ncmpcpp     | [http://wiki.archlinux.org/index.php/Music_Player_Daemon]                                                      |
-    |                   | replaygain       | [http://fluoblog.wordpress.com/2007/10/28/replaygain/]                                                         |
-    |-------------------+------------------+----------------------------------------------------------------------------------------------------------------|
-    | Network           | netcfg           | [http://wiki.archlinux.org/index.php/Netcfg]                                                                   |
-    |                   |                  | [http://wiki.archlinux.org/index.php/Network_Profiles_development]                                             |
-    |-------------------+------------------+----------------------------------------------------------------------------------------------------------------|
-    | Console           | zsh              | [https://wiki.archlinux.org/index.php/Zsh]                                                                     |
-    |-------------------+------------------+----------------------------------------------------------------------------------------------------------------|
-    | Power management  | laptop-mode      | [http://wiki.archlinux.org/index.php/Laptop_Mode_Tools]                                                        |
-    |                   | pm-utils         | [http://wiki.archlinux.org/index.php/Pm-utils]                                                                 |
-    |                   | cpufrequtils     | [http://wiki.archlinux.org/index.php/Cpufrequtils]                                                             |
-    |                   | acpid            | [http://wiki.archlinux.org/index.php/Acpid]                                                                    |
-    |-------------------+------------------+----------------------------------------------------------------------------------------------------------------|
-    | Security          | iptables         | [http://wiki.archlinux.org/index.php/Iptables]                                                                 |
-    |                   |                  | [http://wiki.archlinux.org/index.php/Simple_stateful_firewall]                                                 |
-    |                   | sysctl           | [http://wiki.archlinux.org/index.php/Sysctl]                                                                   |
-    |                   | fail2ban         | [http://wiki.archlinux.org/index.php/Fail2ban]                                                                 |
-    |                   | denyhosts        | [http://doc.ubuntu-fr.org/denyhosts]                                                                           |
-    |                   | rkhunter         | [http://doc.ubuntu-fr.org/rkhunter]                                                                            |
-    |                   |                  | [http://www.siteduzero.com/tutoriel-3-165981-securiser-son-serveur-linux.html]                                 |
-    |                   | pgp              | [http://doc.ubuntu-fr.org/gnupg]                                                                               |
-    |                   |                  | [http://wiki.archlinux.org/index.php/GnuPG]                                                                    |
-    |-------------------+------------------+----------------------------------------------------------------------------------------------------------------|
-    | Mail              | msmtp            | [http://wiki.archlinux.org/index.php/Msmtp]                                                                    |
-    |                   | offlineimap      | [http://wiki.archlinux.org/index.php/OfflineIMAP]                                                              |
-    |-------------------+------------------+----------------------------------------------------------------------------------------------------------------|
-    | Automounter       | udev             | [http://wiki.archlinux.org/index.php/Udev]                                                                     |
-    |-------------------+------------------+----------------------------------------------------------------------------------------------------------------|
-    | Log               | rsyslog          | [http://wiki.archlinux.org/index.php/Rsyslog]                                                                  |
-    |-------------------+------------------+----------------------------------------------------------------------------------------------------------------|
-    | Programming       | ccache           | [http://wiki.archlinux.org/index.php/Ccache]                                                                   |
-    |-------------------+------------------+----------------------------------------------------------------------------------------------------------------|
-    | Appearance        | qgtkstyle        | [http://wiki.archlinux.org/index.php/Uniform_Look_for_QT_and_GTK_Applications]                                 |
-    |                   | x11cursors       | [http://wiki.archlinux.org/index.php/X11_Cursors]                                                              |
-    |                   | fonts            | [https://wiki.archlinux.org/index.php/Fonts]                                                                   |
-    |                   |                  | [https://wiki.archlinux.org/index.php/Font_Configuration]                                                      |
-    |                   |                  | [https://wiki.archlinux.org/index.php/Java_Fonts_-_Sun_JRE]                                                    |
-    |                   | fbsplash         | [http://wiki.archlinux.org/index.php/Fbsplash]                                                                 |
-    |                   |                  |                                                                                                                |
+    |------------------+--------------+----------------------------------------------------------------------------------------------------------------|
+    | _Function_       | _Solution_   | _Links_                                                                                                        |
+    |------------------+--------------+----------------------------------------------------------------------------------------------------------------|
+    | Git server       | gitosis      | [https://wiki.archlinux.org/index.php/Gitosis]                                                                 |
+    |                  |              | [http://www.git-attitude.fr/2010/07/18/heberger-un-serveur-git-avec-gitosis-linux-osx/]                        |
+    |------------------+--------------+----------------------------------------------------------------------------------------------------------------|
+    | OpenID server    | simpleid     | [http://www.generation-linux.fr/index.php?post/2011/01/08/Soyez-votre-propre-fournisseur-OpenID-avec-SimpleID] |
+    |                  |              | [http://wiki.openid.net/w/page/12995226/Run-your-own-identity-server]                                          |
+    |                  |              | [http://simpleid.sourceforge.net]                                                                              |
+    |------------------+--------------+----------------------------------------------------------------------------------------------------------------|
+    | Jabber server    | prosody      | [https://wiki.archlinux.org/index.php/Prosody]                                                                 |
+    |                  |              | [http://prosody.im/doc/advanced_ssl_tls]                                                                       |
+    |------------------+--------------+----------------------------------------------------------------------------------------------------------------|
+    | Time server      | ntpd         | [http://wiki.archlinux.org/index.php/Network_Time_Protocol]                                                    |
+    |                  |              | [http://wiki.archlinux.org/index.php/Time]                                                                     |
+    |                  |              | [http://en.gentoo-wiki.com/wiki/NTP]                                                                           |
+    |------------------+--------------+----------------------------------------------------------------------------------------------------------------|
+    | Tor relay        | tor          | [https://wiki.archlinux.org/index.php/Tor]                                                                     |
+    |------------------+--------------+----------------------------------------------------------------------------------------------------------------|
+    | Internet         | dnsmasq      | [http://wiki.archlinux.org/index.php/Dnsmasq]                                                                  |
+    |------------------+--------------+----------------------------------------------------------------------------------------------------------------|
+    | Web server       | lighttpd     | [http://wiki.archlinux.org/index.php/Lighttpd]                                                                 |
+    |                  |              | [http://wiki.archlinux.org/index.php/PhpMyAdmin]                                                               |
+    |                  |              | [http://www.system-linux.eu/index.php?post/2009/01/03/Securiser-votre-phpini]                                  |
+    |                  |              | [http://univers-libre.net/index.php/2010/05/xcache-dopez-votre-serveur-web/]                                   |
+    |                  |              | [http://redmine.lighttpd.net/wiki/1/Docs:SSL]                                                                  |
+    |                  |              | [https://wiki.archlinux.org/index.php/MySQL]                                                                   |
+    |                  |              | [http://redmine.lighttpd.net/attachments/659/lighttpd.conf]                                                    |
+    |------------------+--------------+----------------------------------------------------------------------------------------------------------------|
+    | Music            | mpd, ncmpcpp | [http://wiki.archlinux.org/index.php/Music_Player_Daemon]                                                      |
+    |                  | replaygain   | [http://fluoblog.wordpress.com/2007/10/28/replaygain/]                                                         |
+    |------------------+--------------+----------------------------------------------------------------------------------------------------------------|
+    | Streaming server | subsonic     |                                                                                                                |
+    |------------------+--------------+----------------------------------------------------------------------------------------------------------------|
+    | Network          | netcfg       | [http://wiki.archlinux.org/index.php/Netcfg]                                                                   |
+    |                  |              | [http://wiki.archlinux.org/index.php/Network_Profiles_development]                                             |
+    |------------------+--------------+----------------------------------------------------------------------------------------------------------------|
+    | Console          | zsh          | [https://wiki.archlinux.org/index.php/Zsh]                                                                     |
+    |------------------+--------------+----------------------------------------------------------------------------------------------------------------|
+    | Power management | laptop-mode  | [http://wiki.archlinux.org/index.php/Laptop_Mode_Tools]                                                        |
+    |                  | pm-utils     | [http://wiki.archlinux.org/index.php/Pm-utils]                                                                 |
+    |                  | cpufrequtils | [http://wiki.archlinux.org/index.php/Cpufrequtils]                                                             |
+    |                  | acpid        | [http://wiki.archlinux.org/index.php/Acpid]                                                                    |
+    |------------------+--------------+----------------------------------------------------------------------------------------------------------------|
+    | Security         | iptables     | [http://wiki.archlinux.org/index.php/Iptables]                                                                 |
+    |                  |              | [http://wiki.archlinux.org/index.php/Simple_stateful_firewall]                                                 |
+    |                  | sysctl       | [http://wiki.archlinux.org/index.php/Sysctl]                                                                   |
+    |                  | fail2ban     | [http://wiki.archlinux.org/index.php/Fail2ban]                                                                 |
+    |                  | denyhosts    | [http://doc.ubuntu-fr.org/denyhosts]                                                                           |
+    |                  | rkhunter     | [http://doc.ubuntu-fr.org/rkhunter]                                                                            |
+    |                  |              | [http://www.siteduzero.com/tutoriel-3-165981-securiser-son-serveur-linux.html]                                 |
+    |                  | pgp          | [http://doc.ubuntu-fr.org/gnupg]                                                                               |
+    |                  |              | [http://wiki.archlinux.org/index.php/GnuPG]                                                                    |
+    |------------------+--------------+----------------------------------------------------------------------------------------------------------------|
+    | Mail             | msmtp        | [http://wiki.archlinux.org/index.php/Msmtp]                                                                    |
+    |                  | offlineimap  | [http://wiki.archlinux.org/index.php/OfflineIMAP]                                                              |
+    |------------------+--------------+----------------------------------------------------------------------------------------------------------------|
+    | Automounter      | udev         | [http://wiki.archlinux.org/index.php/Udev]                                                                     |
+    |------------------+--------------+----------------------------------------------------------------------------------------------------------------|
+    | Log              | rsyslog      | [http://wiki.archlinux.org/index.php/Rsyslog]                                                                  |
+    |------------------+--------------+----------------------------------------------------------------------------------------------------------------|
+    | Programming      | ccache       | [http://wiki.archlinux.org/index.php/Ccache]                                                                   |
+    |------------------+--------------+----------------------------------------------------------------------------------------------------------------|
+    | Appearance       | qgtkstyle    | [http://wiki.archlinux.org/index.php/Uniform_Look_for_QT_and_GTK_Applications]                                 |
+    |                  | x11cursors   | [http://wiki.archlinux.org/index.php/X11_Cursors]                                                              |
+    |                  | fonts        | [https://wiki.archlinux.org/index.php/Fonts]                                                                   |
+    |                  |              | [https://wiki.archlinux.org/index.php/Font_Configuration]                                                      |
+    |                  |              | [https://wiki.archlinux.org/index.php/Java_Fonts_-_Sun_JRE]                                                    |
+    |                  | fbsplash     | [http://wiki.archlinux.org/index.php/Fbsplash]                                                                 |
+    |                  |              |                                                                                                                |
 
 
     = Drivers =
