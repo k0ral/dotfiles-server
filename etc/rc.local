@@ -5,9 +5,6 @@
 
 IRC_SCREENS=`sudo -u koral screen -ls | grep IRC | wc -l`
 TTRSS_SCREENS=`sudo -u koral screen -ls | grep TTRSS | wc -l`
-#SOCKSO_SCREENS=`sudo -u koral screen -ls | grep SOCKSO | wc -l`
-
 
 [ "$IRC_SCREENS" -eq 0 ]   && sudo -u koral screen -S IRC -d -m weechat-curses
 [ "$TTRSS_SCREENS" -eq 0 ] && sudo -u koral screen -S TTRSS -d -m /home/koral/script/update_ttrss.sh
-#[ "$SOCKSO_SCREENS" -eq 0 ] && sudo -u koral screen -S SOCKSO -d -m sockso --nogui
