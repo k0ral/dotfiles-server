@@ -93,7 +93,7 @@ c2s_require_encryption = true
 -- Logging configuration
 -- For advanced logging see http://prosody.im/doc/logging
 log = "/var/log/prosody/prosody.log";
-debug = false; -- Log debug messages?
+debug = true; -- Log debug messages?
 
 ----------- Virtual hosts -----------
 -- You need to add a VirtualHost entry for each domain you wish Prosody to serve.
