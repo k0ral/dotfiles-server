@@ -32,7 +32,7 @@ ListenAddress 0.0.0.0
 # Logging
 # obsoletes QuietMode and FascistLogging
 #SyslogFacility AUTH
-#LogLevel INFO
+LogLevel VERBOSE
 
 # Authentication:
 
@@ -117,4 +117,4 @@ Subsystem	sftp	/usr/lib/ssh/sftp-server
 #	AllowTcpForwarding no
 #	ForceCommand cvs server
 
-AllowUsers koral git
+AllowUsers koral git kamaradclimber
