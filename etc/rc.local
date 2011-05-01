@@ -6,5 +6,5 @@
 IRC_SCREENS=`sudo -u koral screen -ls | grep IRC | wc -l`
 TTRSS_SCREENS=`screen -ls | grep TTRSS | wc -l`
 
-[ "$IRC_SCREENS" -eq 0 ]   && sudo -u koral screen -S IRC -d -m weechat-curses
-[ "$TTRSS_SCREENS" -eq 0 ] && screen -S TTRSS -d -m /home/koral/script/update_ttrss.sh
+[ "$IRC_SCREENS" -eq 0 ]   && su - koral -c "/usr/bin/screen -dmS IRC /usr/bin/weechat-curses"
+[ "$TTRSS_SCREENS" -eq 0 ] && /usr/bin/screen -dmS TTRSS /home/koral/script/update_ttrss.sh
