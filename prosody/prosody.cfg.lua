@@ -20,7 +20,7 @@
 -- for the server. Note that you must create the accounts separately
 -- (see http://prosody.im/doc/creating_accounts for info)
 -- Example: admins = { "user1@example.com", "user2@example.net" }
-admins = { "koral@88.163.232.134" }
+admins = { "koral@jabber.twyk.tk" }
 daemonize = true
 pidfile = "/var/run/prosody/prosody.pid"
 
@@ -53,26 +53,31 @@ modules_enabled = {
 		"ping"; -- Replies to XMPP pings with pongs
 		"pep"; -- Enables users to publish their mood, activity, playing music and more
 		--"register"; -- Allow users to register on this server using a client and change passwords
+		"adhoc"; -- Support for "ad-hoc commands" that can be executed with an XMPP client
+
+	-- Admin interfaces
+		"admin_adhoc"; -- Allows administration via an XMPP client that supports ad-hoc commands
+		--"admin_telnet"; -- Opens telnet console interface on localhost port 5582
 
 	-- Other specific functionality
 		"posix"; -- POSIX functionality, sends server to background, enables syslog, etc.
-		--"console"; -- Opens admin telnet interface on localhost port 5582
 		--"bosh"; -- Enable BOSH clients, aka "Jabber over HTTP"
 		--"httpserver"; -- Serve static files from a directory over HTTP
 		--"groups"; -- Shared roster support
 		--"announce"; -- Send announcement to all online users
 		--"welcome"; -- Welcome users who register accounts
 		--"watchregistrations"; -- Alert admins of registrations
-        "lastactivity"; -- Enable mod_lastactivity
+		--"motd"; -- Send a message to users when they log in
 };
 
 -- These modules are auto-loaded, should you
--- for (for some mad reason) want to disable
+-- (for some mad reason) want to disable
 -- them then uncomment them below
 modules_disabled = {
-	-- "presence";
-	-- "message";
-	-- "iq";
+	-- "presence"; -- Route user/contact status information
+	-- "message"; -- Route messages
+	-- "iq"; -- Route info queries
+	-- "offline"; -- Store offline messages
 };
 
 -- Disable account creation by default, for security
@@ -86,20 +91,51 @@ ssl = {
 	certificate = "/etc/prosody/certs/localhost.cert";
 }
 
--- Require encryption on client/server connections?
-c2s_require_encryption = true
+-- Only allow encrypted streams? Encryption is already used when
+-- available. These options will cause Prosody to deny connections that
+-- are not encrypted. Note that some servers do not support s2s
+-- encryption or have it disabled, including gmail.com and Google Apps
+-- domains.
+
+--c2s_require_encryption = true
 --s2s_require_encryption = false
+
+-- Select the authentication backend to use. The 'internal' providers
+-- use Prosody's configured data storage to store the authentication data.
+-- To allow Prosody to offer secure authentication mechanisms to clients, the
+-- default provider stores passwords in plaintext. If you do not trust your
+-- server please see http://prosody.im/doc/modules/mod_auth_internal_hashed
+-- for information about using the hashed backend.
+
+authentication = "internal_plain"
+
+-- Select the storage backend to use. By default Prosody uses flat files
+-- in its configured data directory, but it also supports more backends
+-- through modules. An "sql" backend is included by default, but requires
+-- additional dependencies. See http://prosody.im/doc/storage for more info.
+
+--storage = "sql" -- Default is "internal"
+
+-- For the "sql" backend, you can uncomment *one* of the below to configure:
+--sql = { driver = "SQLite3", database = "prosody.sqlite" } -- Default. 'database' is the filename.
+--sql = { driver = "MySQL", database = "prosody", username = "prosody", password = "secret", host = "localhost" }
+--sql = { driver = "PostgreSQL", database = "prosody", username = "prosody", password = "secret", host = "localhost" }
+
 
 -- Logging configuration
 -- For advanced logging see http://prosody.im/doc/logging
-log = "/var/log/prosody/prosody.log";
-debug = true; -- Log debug messages?
+log = {
+	debut = "/var/log/prosody/prosody.log"; -- Change 'info' to 'debug' for verbose logging
+	error = "/var/log/prosody/prosody.err";
+	-- "*syslog"; -- Uncomment this for logging to syslog
+	-- "*console"; -- Log to the console, useful for debugging with daemonize=false
+}
 
 ----------- Virtual hosts -----------
 -- You need to add a VirtualHost entry for each domain you wish Prosody to serve.
 -- Settings under each VirtualHost entry apply *only* to that host.
 
-VirtualHost "88.163.232.134"
+VirtualHost "jabber.twyk.tk"
     enabled = true
 
 --VirtualHost "example.com"
@@ -126,5 +162,10 @@ VirtualHost "88.163.232.134"
 --Component "proxy.example.com" "proxy65"
 
 ---Set up an external component (default component port is 5347)
+--
+-- External components allow adding various services, such as gateways/
+-- transports to other networks like ICQ, MSN and Yahoo. For more info
+-- see: http://prosody.im/doc/components#adding_an_external_component
+--
 --Component "gateway.example.com"
 --	component_secret = "password"
