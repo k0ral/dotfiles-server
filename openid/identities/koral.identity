@@ -29,7 +29,7 @@
 ;    http://example.com/myopenid
 ;    https://example.com:8080/myopenid
 ;
-identity="http://88.163.232.134/id/koral/"
+identity="http://id.twyk.tk/koral/"
 
 ;
 ; The password associated with this identity.  This password is hashed using
