@@ -97,8 +97,8 @@ UsePAM yes
 #UsePrivilegeSeparation yes
 #PermitUserEnvironment no
 #Compression delayed
-#ClientAliveInterval 0
-#ClientAliveCountMax 3
+ClientAliveInterval 900
+ClientAliveCountMax 0
 #UseDNS yes
 #PidFile /var/run/sshd.pid
 #MaxStartups 10
