@@ -6,7 +6,7 @@
  *
  */
 /*
- * $Id: config.inc.dist 190 2009-09-19 13:41:04Z kmo $
+ * $Id: config.inc.dist 332 2010-10-31 02:58:39Z kmo $
  *
  */
 
@@ -30,6 +30,22 @@
  *
  */
 define('SIMPLEID_BASE_URL', 'http://id.twyk.tk');
+
+/**
+ * Allow clean URLs.
+ *
+ * URLs used in SimpleID are normally in the form
+ * http://www.example.com/index.php?q=foo.  Enabling clean URLs will allow for
+ * SimpleID URLs to be in the form http://www.example.com/foo
+ *
+ * In order to support clean URLs, you must be using Apache with mod_rewrite
+ * enabled.  You will need to rename .htaccess.dist in the SimpleID web directory
+ * to .htaccess
+ *
+ * @since 0.8
+ *
+ */
+define('SIMPLEID_CLEAN_URL', false);
 
 /**
  * Directory to store identity information.
@@ -57,6 +73,20 @@ define('SIMPLEID_IDENTITIES_DIR', '../identities');
 define('SIMPLEID_CACHE_DIR', '../cache');
 
 /**
+ * Persistent data storage mechanism.
+ *
+ * SimpleID provides flexible methods to store and retrieve persistent data.
+ * By default, SimpleID uses the file system to store this data, implemented
+ * in filesystem.store.inc.  Users can implement other methods by creating
+ * a file with extension .store.inc and specifying the file through this
+ * setting.
+ * 
+ * Generally you do not need to change this setting.
+ *
+ */
+define('SIMPLEID_STORE', 'filesystem');
+
+/**
  * Directory to store persistent data.
  *
  * This directory must exist and be readable and writable by the
@@ -73,7 +103,7 @@ define('SIMPLEID_STORE_DIR', '../store');
  * Allows legacy log-in system.
  *
  * Prior to SimpleID 0.6, the login system utilised by SimpleID requires users'
- * passwords to be sent in plaintet to the web server for verification.  This is
+ * passwords to be sent in plaintext to the web server for verification.  This is
  * an inherent security risk.
  *
  * From version 0.6, SimpleID implemented a form of digest authentication, which
@@ -89,6 +119,22 @@ define('SIMPLEID_STORE_DIR', '../store');
  * @since 0.6
  */
 define('SIMPLEID_ALLOW_LEGACY_LOGIN', false);
+
+/**
+ * Allows web browsers to save passwords.
+ *
+ * SimpleID prevents web browsers from saving user passwords entered in a user
+ * logs into SimpleID.  Setting this value to true will allow browsers to
+ * ask the user whether the password should be saved in the browser's password
+ * store.
+ *
+ * The default is set to false for security reasons.  You should not change
+ * this value unless you are certain regarding the security of your browser's
+ * password store.
+ *
+ * @since 0.8
+ */
+define('SIMPLEID_ALLOW_AUTOCOMPLETE', false);
 
 /**
  * Performs additional verification of relying party return URLs.
@@ -119,6 +165,8 @@ define('SIMPLEID_DATE_TIME_FORMAT', '%Y-%m-%d %H:%M:%S %Z');
 /**
  * The number of seconds before associations expire.  This is an advanced
  * option, for which the default setting should work fine.
+ *
+ * Note that for ICAM compliance, this number must be less than 86400.
  */
 define('SIMPLEID_ASSOC_EXPIRES_IN', 3600);
 
@@ -141,6 +189,8 @@ define('SIMPLEID_EXTENSIONS', 'sreg,ui');
  *
  * To disable logging, set this as an empty string.
  *
+ * @since 0.7
+ *
  */
 define('SIMPLEID_LOGFILE', '../log');
 
@@ -155,6 +205,8 @@ define('SIMPLEID_LOGFILE', '../log');
  * information also being logged.
  *
  * This has effect only if logging is enabled.
+ *
+ * @since 0.7
  *
  */
 define('SIMPLEID_LOGLEVEL', 4);
