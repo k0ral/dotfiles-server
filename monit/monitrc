@@ -319,12 +319,6 @@ if failed host localhost port 5222 then restart
 if failed host localhost port 5269 then restart
 if 5 restarts within 5 cycles then timeout
 
-# denyhosts
-check process denyhosts with pidfile /var/run/denyhosts.pid
-start program = "/etc/rc.d/denyhosts start"
-stop  program = "/etc/rc.d/denyhosts stop"
-if 5 restarts within 5 cycles then timeout
-
 # dnsmasq
 check process dnsmasq with pidfile /var/run/dnsmasq.pid
 start program = "/etc/rc.d/dnsmasq start"
