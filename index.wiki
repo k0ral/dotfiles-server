@@ -33,6 +33,7 @@
     |                  |             | [http://redmine.lighttpd.net/wiki/1/Docs:SSL]                                                                  |
     |                  |             | [https://wiki.archlinux.org/index.php/MySQL]                                                                   |
     |                  |             | [http://redmine.lighttpd.net/attachments/659/lighttpd.conf]                                                    |
+    |                  | awstats     |                                                                                                                |
     |------------------+-------------+----------------------------------------------------------------------------------------------------------------|
     | Music            | mpd         | [http://wiki.archlinux.org/index.php/Music_Player_Daemon]                                                      |
     |------------------+-------------+----------------------------------------------------------------------------------------------------------------|
