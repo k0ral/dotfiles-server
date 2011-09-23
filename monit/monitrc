@@ -305,8 +305,8 @@ if 5 restarts within 5 cycles then timeout
 
 # cups
 check process cups with pidfile /var/run/cups.pid
-start program = "/etc/rc.d/cups start"
-stop  program = "/etc/rc.d/cups stop"
+start program = "/etc/rc.d/cupsd start"
+stop  program = "/etc/rc.d/cupsd stop"
 if failed unixsocket /var/run/cups/cups.sock then restart
 if failed host localhost port 631 then restart
 if 5 restarts within 5 cycles then timeout
