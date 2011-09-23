@@ -546,6 +546,7 @@ home_mailbox = mail/
 #
 #smtpd_banner = $myhostname ESMTP $mail_name
 #smtpd_banner = $myhostname ESMTP $mail_name ($mail_version)
+smtpd_banner = $myhostname ESMTP 
 
 # PARALLEL DELIVERY TO THE SAME DESTINATION
 #
