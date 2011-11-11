@@ -29,7 +29,7 @@
 ;    http://example.com/myopenid
 ;    https://example.com:8080/myopenid
 ;
-identity="http://id.twyk.tk/koral/"
+identity="http://simpleid.twyk.org/koral/"
 
 ;
 ; The password associated with this identity.  This password is hashed using

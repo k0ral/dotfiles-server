@@ -29,7 +29,7 @@
  * </code>
  *
  */
-define('SIMPLEID_BASE_URL', 'http://id.twyk.tk');
+define('SIMPLEID_BASE_URL', 'http://simpleid.twyk.org');
 
 /**
  * Allow clean URLs.
