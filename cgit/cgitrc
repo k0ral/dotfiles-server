@@ -2,7 +2,7 @@
 cache-size=1000
 
 # Specify some default clone prefixes
-clone-prefix=git://twyk.tk 
+clone-prefix=git://twyk.org 
 
 # HTML
 css=/css/cgit.css
@@ -74,6 +74,13 @@ repo.owner=koral
 repo.name=Dotfiles
 #repo.logo=
 
+repo.url=scripts.git
+repo.path=/srv/gitosis/repositories/scripts.git
+repo.desc=Various scripts for administration and other purposes
+repo.owner=koral
+repo.name=Scripts
+#repo.logo=
+
 repo.url=zmqat.git
 repo.path=/srv/gitosis/repositories/zmqat.git
 repo.desc=Socat-like tool for zeromq socket library
@@ -87,6 +94,13 @@ repo.desc=Minimal KISS compliant browser written in Haskell
 repo.owner=koral
 repo.name=hbro
 #repo.logo=
+
+repo.url=imm.git
+repo.path=/srv/gitosis/repositories/imm.git
+repo.desc=Fetch and send RSS/Atom items to a mail address.
+repo.owner=koral
+repo.name=imm
+#repo.logo
 
 repo.url=gervi.git
 repo.path=/srv/gitosis/repositories/gervi.git
