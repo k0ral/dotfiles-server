@@ -20,7 +20,7 @@
 -- for the server. Note that you must create the accounts separately
 -- (see http://prosody.im/doc/creating_accounts for info)
 -- Example: admins = { "user1@example.com", "user2@example.net" }
-admins = { "koral@jabber.twyk.tk" }
+admins = { "koral@jabber.twyk.org" }
 daemonize = true
 pidfile = "/var/run/prosody/prosody.pid"
 
@@ -42,7 +42,7 @@ modules_enabled = {
 	-- Not essential, but recommended
 		"private"; -- Private XML storage (for room bookmarks, etc.)
 		"vcard"; -- Allow users to set vCards
-		--"privacy"; -- Support privacy lists
+		"privacy"; -- Support privacy lists
 		"compression"; -- Stream compression
 
 	-- Nice to have
@@ -135,7 +135,7 @@ log = {
 -- You need to add a VirtualHost entry for each domain you wish Prosody to serve.
 -- Settings under each VirtualHost entry apply *only* to that host.
 
-VirtualHost "jabber.twyk.tk"
+VirtualHost "jabber.twyk.org"
     enabled = true
 
 --VirtualHost "example.com"
@@ -159,7 +159,7 @@ VirtualHost "jabber.twyk.tk"
 --Component "conference.example.com" "muc"
 
 -- Set up a SOCKS5 bytestream proxy for server-proxied file transfers:
---Component "proxy.example.com" "proxy65"
+Component "twyk.org" "proxy65"
 
 ---Set up an external component (default component port is 5347)
 --
