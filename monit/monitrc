@@ -16,7 +16,7 @@
 ##
 ## Start Monit in the background (run as a daemon):
 #
-set daemon  600           # check services at 2-minute intervals
+set daemon  600           # check services at 10-minute intervals
 #     with start delay 240  # optional: delay the first check by 4-minutes (by 
 #                           # default Monit check immediately after Monit start)
 #
@@ -28,23 +28,24 @@ set daemon  600           # check services at 2-minute intervals
 set logfile syslog facility log_daemon                       
 #
 #
-### Set the location of the Monit id file which stores the unique id for the
-### Monit instance. The id is generated and stored on first Monit start. By 
-### default the file is placed in $HOME/.monit.id.
+## Set the location of the Monit id file which stores the unique id for the
+## Monit instance. The id is generated and stored on first Monit start. By 
+## default the file is placed in $HOME/.monit.id.
 #
 set idfile /var/.monit.id
 #
-### Set the location of the Monit state file which saves monitoring states
-### on each cycle. By default the file is placed in $HOME/.monit.state. If
-### the state file is stored on a persistent filesystem, Monit will recover
-### the monitoring state across reboots. If it is on temporary filesystem, the
-### state will be lost on reboot which may be convenient in some situations.
+## Set the location of the Monit state file which saves monitoring states
+## on each cycle. By default the file is placed in $HOME/.monit.state. If
+## the state file is stored on a persistent filesystem, Monit will recover
+## the monitoring state across reboots. If it is on temporary filesystem, the
+## state will be lost on reboot which may be convenient in some situations.
 #
 set statefile /var/.monit.state
 #
 ## Set the list of mail servers for alert delivery. Multiple servers may be 
-## specified using a comma separator. By default Monit uses port 25 - it is
-## possible to override this with the PORT option.
+## specified using a comma separator. If the first mail server fails, Monit 
+# will use the second mail server in the list and so on. By default Monit uses 
+# port 25 - it is possible to override this with the PORT option.
 #
 # set mailserver mail.bar.baz,               # primary mailserver
 #                backup.bar.baz port 10025,  # backup mailserver on port 10025
@@ -252,28 +253,87 @@ check system localhost
 #
 #
 
+# rsyslogd
+check process rsyslogd with pidfile /var/run/rsyslogd.pid
+start program = "/etc/rc.d/rsyslogd start"
+stop program = "/etc/rc.d/rsyslogd stop"
+if 5 restarts within 5 cycles then timeout
+
+# dhcpd
+check process dhcpcd with pidfile /var/run/dhcpcd-eth0.pid
+start program = "/etc/rc.d/network start"
+stop program = "/etc/rc.d/network stop"
+if 5 restarts within 5 cycles then timeout
+
+# ifplugd
+check process ifplugd with pidfile /var/run/ifplugd.eth0.pid
+start program = "/etc/rc.d/ifplugd start"
+stop program = "/etc/rc.d/ifplugd stop"
+if 5 restarts within 5 cycles then timeout
+
+# acpid
+check process acpid with pidfile /var/run/acpid.pid
+start program = "/etc/rc.d/acpid start"
+stop program = "/etc/rc.d/acpid stop"
+if 5 restarts within 5 cycles then timeout
+
+# git-daemon
+check process git-daemon with pidfile /var/run/git-daemon.pid
+start program = "/etc/rc.d/git-daemon start"
+stop program = "/etc/rc.d/git-daemon stop"
+if failed port 9418 for 3 times within 5 cycles then restart
+if 5 restarts within 5 cycles then timeout
+
+# mysql
+check process mysqld with pidfile /var/run/mysqld/mysqld.pid
+group mysql
+start program = "/etc/rc.d/mysqld start"
+stop program = "/etc/rc.d/mysqld stop"
+# if failed port 3306 protocol mysql with timeout 15 seconds then restart
+#if failed unixsocket /var/run/mysqld/mysqld.sock then restart
+if 5 restarts within 5 cycles then timeout
+
+# fcron
+check process fcron with pidfile /var/run/fcron.pid
+start program = "/etc/rc.d/fcron start"
+stop  program = "/etc/rc.d/fcron stop"
+if 5 restarts within 5 cycles then timeout
+
+# ntp
+check process ntpd with pidfile /var/run/ntpd/ntpd.pid
+start program = "/etc/rc.d/ntpd start"
+stop  program = "/etc/rc.d/ntpd stop"
+# if failed port 123 then restart
+if 5 restarts within 5 cycles then timeout
+
 # lighttpd
 check process lighttpd with pidfile /var/run/lighttpd/lighttpd.pid
 group http
 start program = "/etc/rc.d/lighttpd start"
 stop program = "/etc/rc.d/lighttpd stop"
-if failed host localhost port 80
-protocol http then restart
-if 5 restarts within 5 cycles then timeout
-
-# mysql
-check process mysqld with pidfile /var/run/mysqld/mysqld.pid
-start program = "/etc/rc.d/mysqld start"
-stop program = "/etc/rc.d/mysqld stop"
-#if failed host localhost port 3306 then restart
-if failed unixsocket /var/run/mysqld/mysqld.sock then restart
+if failed port 80 protocol http then restart
 if 5 restarts within 5 cycles then timeout
 
 # sshd
 check process sshd with pidfile /var/run/sshd.pid
 start program "/etc/rc.d/sshd start"
 stop program "/etc/rc.d/sshd stop"
-if failed host localhost port 22 protocol ssh then restart
+if failed port 22 protocol ssh then restart
+if 5 restarts within 5 cycles then timeout
+
+# sslh
+check process sslh with pidfile /var/run/sslh.pid
+start program "/etc/rc.d/sslh start"
+stop program "/etc/rc.d/sslh stop"
+# if failed port 443 then restart
+# if failed host localhost port 443 protocol https then restart
+if 5 restarts within 5 cycles then timeout
+
+# dnsmasq
+check process dnsmasq with pidfile /run/dnsmasq.pid
+start program = "/etc/rc.d/dnsmasq start"
+stop  program = "/etc/rc.d/dnsmasq stop"
+if failed port 53 then restart
 if 5 restarts within 5 cycles then timeout
 
 # postfix
@@ -283,32 +343,12 @@ stop  program = "/etc/rc.d/postfix stop"
 if failed port 25 protocol smtp then restart
 if 5 restarts within 5 cycles then timeout
 
-# fail2ban
-# check process fail2ban-server with pidfile /var/run/fail2ban/fail2ban.pid
-# start program = "/etc/rc.d/fail2ban start"
-# stop  program = "/etc/rc.d/fail2ban stop"
-# if failed unixsocket /var/run/fail2ban/fail2ban.sock then restart
-# if 5 restarts within 5 cycles then timeout
-
-# fcron
-check process fcron with pidfile /var/run/fcron.pid
-start program = "/etc/rc.d/fcron start"
-stop  program = "/etc/rc.d/fcron stop"
-if 5 restarts within 5 cycles then timeout
-
-# ntp
-check process ntpd with pidfile /var/run/ntpd.pid
-start program = "/etc/rc.d/ntpd start"
-stop  program = "/etc/rc.d/ntpd stop"
-if failed host localhost port 123 type udp then restart
-if 5 restarts within 5 cycles then timeout
-
-# cups
-check process cups with pidfile /var/run/cups.pid
-start program = "/etc/rc.d/cupsd start"
-stop  program = "/etc/rc.d/cupsd stop"
-if failed unixsocket /var/run/cups/cups.sock then restart
-if failed host localhost port 631 then restart
+# rpcbind
+check process rpcbind with pidfile /var/run/rpcbind.pid
+start program = "/etc/rc.d/rpcbind start"
+stop  program = "/etc/rc.d/rpcbind stop"
+if failed port 111 then restart
+if failed unixsocket /var/run/rpcbind.sock then restart
 if 5 restarts within 5 cycles then timeout
 
 # prosody
@@ -319,16 +359,31 @@ if failed host localhost port 5222 then restart
 if failed host localhost port 5269 then restart
 if 5 restarts within 5 cycles then timeout
 
-# dnsmasq
-check process dnsmasq with pidfile /var/run/dnsmasq.pid
-start program = "/etc/rc.d/dnsmasq start"
-stop  program = "/etc/rc.d/dnsmasq stop"
-if failed host localhost port 53 then restart
+# dbus
+check process dbus with pidfile /var/run/dbus.pid
+start program = "/etc/rc.d/dbus start"
+stop  program = "/etc/rc.d/dbus stop"
 if 5 restarts within 5 cycles then timeout
 
-# git-daemon
-check process git-daemon with pidfile /var/run/git-daemon.pid
-start program = "/etc/rc.d/git-daemon start"
-stop  program = "/etc/rc.d/git-daemon stop"
-if failed host localhost port 9418 then restart
+# cups
+check process cups with pidfile /var/run/cupsd.pid
+start program = "/etc/rc.d/cupsd start"
+stop  program = "/etc/rc.d/cupsd stop"
+if failed port 631 then restart
+if failed unixsocket /var/run/cups/cups.sock then restart
 if 5 restarts within 5 cycles then timeout
+
+# murmur
+check process murmur with pidfile /var/run/murmur/murmur.pid
+start program = "/etc/rc.d/murmur start"
+stop  program = "/etc/rc.d/murmur stop"
+if 5 restarts within 5 cycles then timeout
+
+# fail2ban
+# check process fail2ban-server with pidfile /var/run/fail2ban/fail2ban.pid
+# start program = "/etc/rc.d/fail2ban start"
+# stop  program = "/etc/rc.d/fail2ban stop"
+# if failed unixsocket /var/run/fail2ban/fail2ban.sock then restart
+# if 5 restarts within 5 cycles then timeout
+
+
