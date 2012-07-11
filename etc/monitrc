@@ -16,8 +16,8 @@
 ##
 ## Start Monit in the background (run as a daemon):
 #
-set daemon  600           # check services at 10-minute intervals
-#     with start delay 240  # optional: delay the first check by 4-minutes (by 
+set daemon  600             # check services at 10-minute intervals
+#   with start delay 240    # optional: delay the first check by 4-minutes (by 
 #                           # default Monit check immediately after Monit start)
 #
 #
@@ -77,22 +77,21 @@ set eventqueue
 #     # and register without credentials     # Don't register credentials
 #
 #
-#
-## Monit by default uses the following alert mail format:
-##
+## Monit by default uses the following format for alerts if the the mail-format
+## statement is missing::
 ## --8<--
-## From: monit@$HOST                         # sender
-## Subject: monit alert --  $EVENT $SERVICE  # subject
+## set mail-format {
+##      from: monit@$HOST
+##   subject: monit alert --  $EVENT $SERVICE
+##   message: $EVENT Service $SERVICE
+##                 Date:        $DATE
+##                 Action:      $ACTION
+##                 Host:        $HOST
+##                 Description: $DESCRIPTION
 ##
-## $EVENT Service $SERVICE                   #
-##                                           #
-## 	Date:        $DATE                   #
-## 	Action:      $ACTION                 #
-## 	Host:        $HOST                   # body
-## 	Description: $DESCRIPTION            #
-##                                           #
-## Your faithful employee,                   #
-## Monit                                     #
+##            Your faithful employee,
+##            Monit
+## }
 ## --8<--
 ##
 ## You can override this message format or parts of it, such as subject
@@ -253,10 +252,24 @@ check system localhost
 #
 #
 
-# rsyslogd
-check process rsyslogd with pidfile /var/run/rsyslogd.pid
-start program = "/etc/rc.d/rsyslogd start"
-stop program = "/etc/rc.d/rsyslogd stop"
+# acpid
+check process acpid with pidfile /var/run/acpid.pid
+start program = "/etc/rc.d/acpid start"
+stop program = "/etc/rc.d/acpid stop"
+if 5 restarts within 5 cycles then timeout
+
+# cups
+#check process cups with pidfile /var/run/cupsd.pid
+#start program = "/etc/rc.d/cupsd start"
+#stop  program = "/etc/rc.d/cupsd stop"
+#if failed port 631 then restart
+#if failed unixsocket /var/run/cups/cups.sock then restart
+#if 5 restarts within 5 cycles then timeout
+
+# dbus
+check process dbus with pidfile /var/run/dbus.pid
+start program = "/etc/rc.d/dbus start"
+stop  program = "/etc/rc.d/dbus stop"
 if 5 restarts within 5 cycles then timeout
 
 # dhcpd
@@ -265,16 +278,30 @@ start program = "/etc/rc.d/network start"
 stop program = "/etc/rc.d/network stop"
 if 5 restarts within 5 cycles then timeout
 
+# dnsmasq
+check process dnsmasq with pidfile /run/dnsmasq.pid
+start program = "/etc/rc.d/dnsmasq start"
+stop  program = "/etc/rc.d/dnsmasq stop"
+if failed port 53 then restart
+if 5 restarts within 5 cycles then timeout
+
+# fail2ban
+# check process fail2ban-server with pidfile /var/run/fail2ban/fail2ban.pid
+# start program = "/etc/rc.d/fail2ban start"
+# stop  program = "/etc/rc.d/fail2ban stop"
+# if failed unixsocket /var/run/fail2ban/fail2ban.sock then restart
+# if 5 restarts within 5 cycles then timeout
+
+# fcron
+check process fcron with pidfile /var/run/fcron.pid
+start program = "/etc/rc.d/fcron start"
+stop  program = "/etc/rc.d/fcron stop"
+if 5 restarts within 5 cycles then timeout
+
 # ifplugd
 check process ifplugd with pidfile /var/run/ifplugd.eth0.pid
 start program = "/etc/rc.d/ifplugd start"
 stop program = "/etc/rc.d/ifplugd stop"
-if 5 restarts within 5 cycles then timeout
-
-# acpid
-check process acpid with pidfile /var/run/acpid.pid
-start program = "/etc/rc.d/acpid start"
-stop program = "/etc/rc.d/acpid stop"
 if 5 restarts within 5 cycles then timeout
 
 # git-daemon
@@ -282,6 +309,20 @@ check process git-daemon with pidfile /var/run/git-daemon.pid
 start program = "/etc/rc.d/git-daemon start"
 stop program = "/etc/rc.d/git-daemon stop"
 if failed port 9418 for 3 times within 5 cycles then restart
+if 5 restarts within 5 cycles then timeout
+
+# lighttpd
+check process lighttpd with pidfile /var/run/lighttpd/lighttpd.pid
+group http
+start program = "/etc/rc.d/lighttpd start"
+stop program = "/etc/rc.d/lighttpd stop"
+if failed port 80 protocol http then restart
+if 5 restarts within 5 cycles then timeout
+
+# murmur
+check process murmur with pidfile /var/run/murmur/murmur.pid
+start program = "/etc/rc.d/murmur start"
+stop  program = "/etc/rc.d/murmur stop"
 if 5 restarts within 5 cycles then timeout
 
 # mysql
@@ -293,12 +334,6 @@ stop program = "/etc/rc.d/mysqld stop"
 #if failed unixsocket /var/run/mysqld/mysqld.sock then restart
 if 5 restarts within 5 cycles then timeout
 
-# fcron
-check process fcron with pidfile /var/run/fcron.pid
-start program = "/etc/rc.d/fcron start"
-stop  program = "/etc/rc.d/fcron stop"
-if 5 restarts within 5 cycles then timeout
-
 # ntp
 check process ntpd with pidfile /var/run/ntpd/ntpd.pid
 start program = "/etc/rc.d/ntpd start"
@@ -306,12 +341,33 @@ stop  program = "/etc/rc.d/ntpd stop"
 # if failed port 123 then restart
 if 5 restarts within 5 cycles then timeout
 
-# lighttpd
-check process lighttpd with pidfile /var/run/lighttpd/lighttpd.pid
-group http
-start program = "/etc/rc.d/lighttpd start"
-stop program = "/etc/rc.d/lighttpd stop"
-if failed port 80 protocol http then restart
+# postfix
+check process postfix with pidfile /var/spool/postfix/pid/master.pid
+start program = "/etc/rc.d/postfix start"
+stop  program = "/etc/rc.d/postfix stop"
+if failed port 25 protocol smtp then restart
+if 5 restarts within 5 cycles then timeout
+
+# prosody
+check process prosody with pidfile /var/run/prosody/prosody.pid
+start program = "/etc/rc.d/prosody start"
+stop  program = "/etc/rc.d/prosody stop"
+if failed host localhost port 5222 then restart
+if failed host localhost port 5269 then restart
+if 5 restarts within 5 cycles then timeout
+
+# rpcbind
+check process rpcbind with pidfile /var/run/rpcbind.pid
+start program = "/etc/rc.d/rpcbind start"
+stop  program = "/etc/rc.d/rpcbind stop"
+if failed port 111 then restart
+if failed unixsocket /var/run/rpcbind.sock then restart
+if 5 restarts within 5 cycles then timeout
+
+# rsyslogd
+check process rsyslogd with pidfile /var/run/rsyslogd.pid
+start program = "/etc/rc.d/rsyslogd start"
+stop program = "/etc/rc.d/rsyslogd stop"
 if 5 restarts within 5 cycles then timeout
 
 # sshd
@@ -328,62 +384,4 @@ stop program "/etc/rc.d/sslh stop"
 # if failed port 443 then restart
 # if failed host localhost port 443 protocol https then restart
 if 5 restarts within 5 cycles then timeout
-
-# dnsmasq
-check process dnsmasq with pidfile /run/dnsmasq.pid
-start program = "/etc/rc.d/dnsmasq start"
-stop  program = "/etc/rc.d/dnsmasq stop"
-if failed port 53 then restart
-if 5 restarts within 5 cycles then timeout
-
-# postfix
-check process postfix with pidfile /var/spool/postfix/pid/master.pid
-start program = "/etc/rc.d/postfix start"
-stop  program = "/etc/rc.d/postfix stop"
-if failed port 25 protocol smtp then restart
-if 5 restarts within 5 cycles then timeout
-
-# rpcbind
-check process rpcbind with pidfile /var/run/rpcbind.pid
-start program = "/etc/rc.d/rpcbind start"
-stop  program = "/etc/rc.d/rpcbind stop"
-if failed port 111 then restart
-if failed unixsocket /var/run/rpcbind.sock then restart
-if 5 restarts within 5 cycles then timeout
-
-# prosody
-check process prosody with pidfile /var/run/prosody/prosody.pid
-start program = "/etc/rc.d/prosody start"
-stop  program = "/etc/rc.d/prosody stop"
-if failed host localhost port 5222 then restart
-if failed host localhost port 5269 then restart
-if 5 restarts within 5 cycles then timeout
-
-# dbus
-check process dbus with pidfile /var/run/dbus.pid
-start program = "/etc/rc.d/dbus start"
-stop  program = "/etc/rc.d/dbus stop"
-if 5 restarts within 5 cycles then timeout
-
-# cups
-check process cups with pidfile /var/run/cupsd.pid
-start program = "/etc/rc.d/cupsd start"
-stop  program = "/etc/rc.d/cupsd stop"
-if failed port 631 then restart
-if failed unixsocket /var/run/cups/cups.sock then restart
-if 5 restarts within 5 cycles then timeout
-
-# murmur
-check process murmur with pidfile /var/run/murmur/murmur.pid
-start program = "/etc/rc.d/murmur start"
-stop  program = "/etc/rc.d/murmur stop"
-if 5 restarts within 5 cycles then timeout
-
-# fail2ban
-# check process fail2ban-server with pidfile /var/run/fail2ban/fail2ban.pid
-# start program = "/etc/rc.d/fail2ban start"
-# stop  program = "/etc/rc.d/fail2ban stop"
-# if failed unixsocket /var/run/fail2ban/fail2ban.sock then restart
-# if 5 restarts within 5 cycles then timeout
-
 
