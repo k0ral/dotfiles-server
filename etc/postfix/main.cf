@@ -74,6 +74,7 @@ mail_owner = postfix
 #
 #myhostname = host.domain.tld
 #myhostname = virtual.domain.tld
+myhostname = mail.twyk.org
 
 # The mydomain parameter specifies the local internet domain name.
 # The default is to use $myhostname minus the first component.
@@ -81,6 +82,7 @@ mail_owner = postfix
 # parameters.
 #
 #mydomain = domain.tld
+mydomain = twyk.org
 
 # SENDING MAIL
 # 
@@ -96,7 +98,7 @@ mail_owner = postfix
 # to recipient addresses that have no @domain part.
 #
 #myorigin = $myhostname
-#myorigin = $mydomain
+myorigin = $mydomain
 
 # RECEIVING MAIL
 
@@ -113,7 +115,6 @@ mail_owner = postfix
 inet_interfaces = all
 #inet_interfaces = $myhostname
 #inet_interfaces = $myhostname, localhost
-#inet_interfaces = loopback-only
 
 # The proxy_interfaces parameter specifies the network interface
 # addresses that this mail system receives mail on by way of a
@@ -162,6 +163,7 @@ inet_interfaces = all
 #mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain
 #mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain,
 #	mail.$mydomain, www.$mydomain, ftp.$mydomain
+mydestination = $mydomain, localhost
 
 # REJECTING MAIL FOR UNKNOWN LOCAL USERS
 #
@@ -461,7 +463,12 @@ home_mailbox = mail/
 # the main.cf file, otherwise the SMTP server will reject mail for    
 # non-UNIX accounts with "User unknown in local recipient table".
 #
-#mailbox_transport = lmtp:unix:/file/name
+# Cyrus IMAP over LMTP. Specify ``lmtpunix      cmd="lmtpd"
+# listen="/var/imap/socket/lmtp" prefork=0'' in cyrus.conf.
+#mailbox_transport = lmtp:unix:/var/imap/socket/lmtp
+#
+# Cyrus IMAP via command line. Uncomment the "cyrus...pipe" and
+# subsequent line in master.cf.
 #mailbox_transport = cyrus
 
 # The fallback_transport specifies the optional transport in master.cf
@@ -652,7 +659,8 @@ sample_directory = /etc/postfix/sample
 
 # readme_directory: The location of the Postfix README files.
 #
-readme_directory = no
+readme_directory = /usr/share/doc/postfix
+inet_protocols = ipv4
 
 
 # For local delivery only
