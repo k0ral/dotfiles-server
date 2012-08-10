@@ -1,0 +1,2 @@
+@weekly cd ${HOME}/laedra/config; git pull
+@weekly cd ${HOME}/.config; git push adama
