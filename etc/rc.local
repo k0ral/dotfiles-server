@@ -1,8 +1,6 @@
 #!/bin/bash
 #
-# /etc/rc.local: Local multi-user startup script.
+# /etc/rc.local: Local multi-user start-up script.
 #
 
-#IRC_SCREENS=`sudo -u koral screen -ls | grep IRC | wc -l`
 
-#[ "$IRC_SCREENS" -eq 0 ]   && su - koral -c "/usr/bin/screen -dmS IRC /usr/bin/weechat-curses"
