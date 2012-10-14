@@ -258,6 +258,13 @@ start program = "/etc/rc.d/acpid start"
 stop program = "/etc/rc.d/acpid stop"
 if 5 restarts within 5 cycles then timeout
 
+# bind
+check process named with pidfile /run/named/named.pid
+start program = "/etc/rc.d/named start"
+stop program = "/etc/rc.d/named stop"
+if failed port 53 then restart
+if 5 restarts within 5 cycles then timeout
+
 # cups
 #check process cups with pidfile /var/run/cupsd.pid
 #start program = "/etc/rc.d/cupsd start"
@@ -267,23 +274,23 @@ if 5 restarts within 5 cycles then timeout
 #if 5 restarts within 5 cycles then timeout
 
 # dbus
-check process dbus with pidfile /var/run/dbus.pid
+check process dbus with pidfile /var/run/dbus/pid
 start program = "/etc/rc.d/dbus start"
 stop  program = "/etc/rc.d/dbus stop"
 if 5 restarts within 5 cycles then timeout
 
 # dhcpd
-check process dhcpcd with pidfile /var/run/dhcpcd-eth0.pid
-start program = "/etc/rc.d/network start"
-stop program = "/etc/rc.d/network stop"
-if 5 restarts within 5 cycles then timeout
+#check process dhcpcd with pidfile /var/run/dhcpcd-eth0.pid
+#start program = "/etc/rc.d/network start"
+#stop program = "/etc/rc.d/network stop"
+#if 5 restarts within 5 cycles then timeout
 
 # dnsmasq
-check process dnsmasq with pidfile /run/dnsmasq.pid
-start program = "/etc/rc.d/dnsmasq start"
-stop  program = "/etc/rc.d/dnsmasq stop"
-if failed port 53 then restart
-if 5 restarts within 5 cycles then timeout
+#check process dnsmasq with pidfile /run/dnsmasq.pid
+#start program = "/etc/rc.d/dnsmasq start"
+#stop  program = "/etc/rc.d/dnsmasq stop"
+#if failed port 53 then restart
+#if 5 restarts within 5 cycles then timeout
 
 # fail2ban
 # check process fail2ban-server with pidfile /var/run/fail2ban/fail2ban.pid
@@ -292,10 +299,10 @@ if 5 restarts within 5 cycles then timeout
 # if failed unixsocket /var/run/fail2ban/fail2ban.sock then restart
 # if 5 restarts within 5 cycles then timeout
 
-# fcron
-check process fcron with pidfile /var/run/fcron.pid
-start program = "/etc/rc.d/fcron start"
-stop  program = "/etc/rc.d/fcron stop"
+# crond
+check process crond with pidfile /var/run/crond.pid
+start program = "/etc/rc.d/crond start"
+stop  program = "/etc/rc.d/crond stop"
 if 5 restarts within 5 cycles then timeout
 
 # ifplugd
@@ -309,6 +316,13 @@ check process git-daemon with pidfile /var/run/git-daemon.pid
 start program = "/etc/rc.d/git-daemon start"
 stop program = "/etc/rc.d/git-daemon stop"
 if failed port 9418 for 3 times within 5 cycles then restart
+if 5 restarts within 5 cycles then timeout
+
+# mpd
+check process mpd with pidfile /var/run/mpd/mpd.pid
+start program = "/etc/rc.d/mpd start"
+stop program = "/etc/rc.d/mpd stop"
+if failed port 6600 for 3 times within 5 cycles then restart
 if 5 restarts within 5 cycles then timeout
 
 # lighttpd
@@ -335,7 +349,7 @@ stop program = "/etc/rc.d/mysqld stop"
 if 5 restarts within 5 cycles then timeout
 
 # ntp
-check process ntpd with pidfile /var/run/ntpd/ntpd.pid
+check process ntpd with pidfile /var/run/ntpd.pid
 start program = "/etc/rc.d/ntpd start"
 stop  program = "/etc/rc.d/ntpd stop"
 # if failed port 123 then restart
