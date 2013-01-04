@@ -83,7 +83,7 @@ modules_disabled = {
 -- Disable account creation by default, for security
 -- For more information see http://prosody.im/doc/creating_accounts
 allow_registration = false;
-	
+
 -- These are the SSL/TLS-related settings. If you don't want
 -- to use SSL/TLS, you may comment or remove this
 ssl = {
@@ -125,7 +125,7 @@ authentication = "internal_plain"
 -- Logging configuration
 -- For advanced logging see http://prosody.im/doc/logging
 log = {
-	debut = "/var/log/prosody/prosody.log"; -- Change 'info' to 'debug' for verbose logging
+	info = "/var/log/prosody/prosody.log"; -- Change 'info' to 'debug' for verbose logging
 	error = "/var/log/prosody/prosody.err";
 	-- "*syslog"; -- Uncomment this for logging to syslog
 	-- "*console"; -- Log to the console, useful for debugging with daemonize=false
@@ -138,17 +138,17 @@ log = {
 VirtualHost "jabber.twyk.org"
     enabled = true
 
---VirtualHost "example.com"
---    enabled = false -- Remove this line to enable this host
+VirtualHost "example.com"
+	enabled = false -- Remove this line to enable this host
 
---    -- Assign this host a certificate for TLS, otherwise it would use the one
---    -- set in the global section (if any).
---    -- Note that old-style SSL on port 5223 only supports one certificate, and will always
---    -- use the global one.
---    ssl = { 
---        key = "/etc/prosody/certs/example.com.key";
---        certificate = "/etc/prosody/certs/example.com.crt";
---    }
+	-- Assign this host a certificate for TLS, otherwise it would use the one
+	-- set in the global section (if any).
+	-- Note that old-style SSL on port 5223 only supports one certificate, and will always
+	-- use the global one.
+	ssl = {
+		key = "/etc/prosody/certs/example.com.key";
+		certificate = "/etc/prosody/certs/example.com.crt";
+	}
 
 ------ Components ------
 -- You can specify components to add hosts that provide special services,
