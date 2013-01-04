@@ -1,13 +1,13 @@
 $TTL 7200
 $ORIGIN twyk.org.
-@               IN      SOA     twyk.org.  root (
-    2012101438 ; Serial
+@               IN      SOA     ns  mail (
+    2012101443 ; Serial
     28800      ; Refresh
     1800       ; Retry
     604800     ; Expire - 1 week
     86400 )    ; Minimum
 
-@               IN      NS      twyk.org.
+@               IN      NS      ns
 @               IN      MX 10   mail
 @               IN      A       82.228.255.43
 @               IN      AAAA    2a01:e35:2e4f:f2b0::9
@@ -18,6 +18,8 @@ $ORIGIN twyk.org.
 
 mail            IN      A       82.228.255.43
 mail            IN      AAAA    2a01:e35:2e4f:f2b0::9
+ns              IN      A       82.228.255.43
+ns              IN      AAAA    2a01:e35:2e4f:f2b0::9
 cgit            IN      CNAME   twyk.org.
 jabber          IN      CNAME   twyk.org.
 monit           IN      CNAME   twyk.org.
