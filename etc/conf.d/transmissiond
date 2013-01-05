@@ -1,0 +1,5 @@
+# example configuration file
+
+TRANSMISSION_HOME=/home/koral
+TRANS_USER="koral"
+TRANS_ARGS="-g $TRANSMISSION_HOME/.config/transmission-daemon"
