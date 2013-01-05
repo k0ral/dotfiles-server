@@ -1,2 +1,1 @@
-@weekly /bin/chmod 700 /etc/monitrc
 @weekly /bin/chmod -R 755 /home/shared && /bin/chmod -R 775 /home/shared/music
