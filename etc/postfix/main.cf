@@ -666,3 +666,8 @@ inet_protocols = ipv4
 # For local delivery only
 append_dot_mydomain = no
 #default_transport = error: Local delivery only!
+
+# TLS
+smtpd_tls_cert_file = /etc/ssl/cert/mail.crt
+smtpd_tls_key_file = $smtpd_tls_cert_file
+smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated 	    defer_unauth_destination
