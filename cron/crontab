@@ -1,2 +1,2 @@
 @weekly cd ${HOME}/laedra/config; git pull
-@weekly cd ${HOME}/.config; git push adama
+@weekly cd /home/koral/.config && hg push /home/hg-public/dotfiles-server
