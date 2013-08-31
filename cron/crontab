@@ -1,1 +1,1 @@
-@daily cd ${HOME}/.config && /usr/bin/hg push /home/hg-public/dotfiles-server
+@daily cd ${HOME}/.config && /usr/bin/hg push /home/hg-public/dotfiles-server > /dev/null 2>&1
