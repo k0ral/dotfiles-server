@@ -1,7 +1,7 @@
 $TTL 7200
 $ORIGIN twyk.org.
 @               IN      SOA     ns  mail (
-    2013031600 ; Serial
+    2013051900 ; Serial
     28800      ; Refresh
     1800       ; Retry
     604800     ; Expire - 1 week
