@@ -1,8 +1,8 @@
 -- Prosody Example Configuration File
--- 
+--
 -- Information on configuring Prosody can be found on our
 -- website at http://prosody.im/doc/configure
--- 
+--
 -- Tip: You can check that the syntax of this file is correct
 -- when you have finished by running: luac -p prosody.cfg.lua
 -- If there are any errors, it will let you know what and where
@@ -11,6 +11,9 @@
 -- The only thing left to do is rename this file to remove the .dist ending, and fill in the
 -- blanks. Good luck, and happy Jabbering!
 
+daemonize = true
+pidfile = "/run/prosody/prosody.pid"
+s2s_require_encryption = true
 
 ---------- Server-wide settings ----------
 -- Settings in this section apply to the whole server and are the default settings
@@ -21,8 +24,6 @@
 -- (see http://prosody.im/doc/creating_accounts for info)
 -- Example: admins = { "user1@example.com", "user2@example.net" }
 admins = { "koral@jabber.twyk.org" }
-daemonize = true
-pidfile = "/var/run/prosody/prosody.pid"
 
 -- Enable use of libevent for better performance under high load
 -- For more information see: http://prosody.im/doc/libevent
@@ -32,73 +33,92 @@ use_libevent = true;
 -- It looks for mod_modulename.lua in the plugins folder, so make sure that exists too.
 -- Documentation on modules can be found at: http://prosody.im/doc/modules
 modules_enabled = {
-	-- Generally required
-		"roster"; -- Allow users to have a roster. Recommended ;)
-		"saslauth"; -- Authentication for clients and servers. Recommended if you want to log in.
-		"tls"; -- Add support for secure TLS on c2s/s2s connections
-		"dialback"; -- s2s dialback support
-		"disco"; -- Service discovery
+    -- Generally required
+        "roster"; -- Allow users to have a roster. Recommended ;)
+        "saslauth"; -- Authentication for clients and servers. Recommended if you want to log in.
+        "tls"; -- Add support for secure TLS on c2s/s2s connections
+        "dialback"; -- s2s dialback support
+        "disco"; -- Service discovery
 
-	-- Not essential, but recommended
-		"private"; -- Private XML storage (for room bookmarks, etc.)
-		"vcard"; -- Allow users to set vCards
-		"privacy"; -- Support privacy lists
-		"compression"; -- Stream compression
+    -- Not essential, but recommended
+        "private"; -- Private XML storage (for room bookmarks, etc.)
+        "vcard"; -- Allow users to set vCards
+        "privacy"; -- Support privacy lists
+        "compression"; -- Stream compression
+        "component"; -- Support for external components
+        "muc"; -- Multi-User Chat support
+        --"proxy65";
 
-	-- Nice to have
-		"legacyauth"; -- Legacy authentication. Only used by some old clients and bots.
-		--"version"; -- Replies to server version requests
-		--"uptime"; -- Report how long server has been running
-		--"time"; -- Let others know the time here on this server
-		"ping"; -- Replies to XMPP pings with pongs
-		"pep"; -- Enables users to publish their mood, activity, playing music and more
-		--"register"; -- Allow users to register on this server using a client and change passwords
-		"adhoc"; -- Support for "ad-hoc commands" that can be executed with an XMPP client
+    -- Nice to have
+        --"version"; -- Replies to server version requests
+        --"uptime"; -- Report how long server has been running
+        --"time"; -- Let others know the time here on this server
+        "ping"; -- Replies to XMPP pings with pongs
+        "pep"; -- Enables users to publish their mood, activity, playing music and more
+        --"register"; -- Allow users to register on this server using a client and change passwords
+        "adhoc"; -- Support for "ad-hoc commands" that can be executed with an XMPP client
+        "lastactivity"; -- Allows users to query how long another user has been idle
 
-	-- Admin interfaces
-		"admin_adhoc"; -- Allows administration via an XMPP client that supports ad-hoc commands
-		--"admin_telnet"; -- Opens telnet console interface on localhost port 5582
+    -- Admin interfaces
+        "admin_adhoc"; -- Allows administration via an XMPP client that supports ad-hoc commands
+        --"admin_telnet"; -- Opens telnet console interface on localhost port 5582
 
-	-- Other specific functionality
-		"posix"; -- POSIX functionality, sends server to background, enables syslog, etc.
-		--"bosh"; -- Enable BOSH clients, aka "Jabber over HTTP"
-		--"httpserver"; -- Serve static files from a directory over HTTP
-		--"groups"; -- Shared roster support
-		--"announce"; -- Send announcement to all online users
-		--"welcome"; -- Welcome users who register accounts
-		--"watchregistrations"; -- Alert admins of registrations
-		--"motd"; -- Send a message to users when they log in
+    -- HTTP modules
+        --"bosh"; -- Enable BOSH clients, aka "Jabber over HTTP"
+        --"http_files"; -- Serve static files from a directory over HTTP
+
+    -- Other specific functionality
+        "posix"; -- POSIX functionality, sends server to background, enables syslog, etc.
+        --"groups"; -- Shared roster support
+        --"announce"; -- Send announcement to all online users
+        --"welcome"; -- Welcome users who register accounts
+        --"watchregistrations"; -- Alert admins of registrations
+        --"motd"; -- Send a message to users when they log in
+        --"legacyauth"; -- Legacy authentication. Only used by some old clients and bots.
 };
 
--- These modules are auto-loaded, should you
--- (for some mad reason) want to disable
--- them then uncomment them below
+-- These modules are auto-loaded, but should you want
+-- to disable them then uncomment them here:
 modules_disabled = {
-	-- "presence"; -- Route user/contact status information
-	-- "message"; -- Route messages
-	-- "iq"; -- Route info queries
-	-- "offline"; -- Store offline messages
+    -- "offline"; -- Store offline messages
+    -- "c2s"; -- Handle client connections
+    -- "s2s"; -- Handle server-to-server connections
 };
 
 -- Disable account creation by default, for security
 -- For more information see http://prosody.im/doc/creating_accounts
-allow_registration = false;
+allow_registration = false
 
 -- These are the SSL/TLS-related settings. If you don't want
 -- to use SSL/TLS, you may comment or remove this
 ssl = {
-	key = "/etc/prosody/certs/localhost.key";
-	certificate = "/etc/prosody/certs/localhost.cert";
+    key = "/etc/prosody/certs/localhost.key";
+    certificate = "/etc/prosody/certs/localhost.crt";
 }
 
--- Only allow encrypted streams? Encryption is already used when
--- available. These options will cause Prosody to deny connections that
--- are not encrypted. Note that some servers do not support s2s
--- encryption or have it disabled, including gmail.com and Google Apps
--- domains.
+-- Force clients to use encrypted connections? This option will
+-- prevent clients from authenticating unless they are using encryption.
 
---c2s_require_encryption = true
---s2s_require_encryption = false
+c2s_require_encryption = true
+
+-- Force certificate authentication for server-to-server connections?
+-- This provides ideal security, but requires servers you communicate
+-- with to support encryption AND present valid, trusted certificates.
+-- NOTE: Your version of LuaSec must support certificate verification!
+-- For more information see http://prosody.im/doc/s2s#security
+
+s2s_secure_auth = false
+
+-- Many servers don't support encryption or have invalid or self-signed
+-- certificates. You can list domains here that will not be required to
+-- authenticate using certificates. They will be authenticated using DNS.
+
+--s2s_insecure_domains = { "gmail.com" }
+
+-- Even if you leave s2s_secure_auth disabled, you can still require valid
+-- certificates for some domains by specifying a list here.
+
+--s2s_secure_domains = { "jabber.org" }
 
 -- Select the authentication backend to use. The 'internal' providers
 -- use Prosody's configured data storage to store the authentication data.
@@ -107,7 +127,8 @@ ssl = {
 -- server please see http://prosody.im/doc/modules/mod_auth_internal_hashed
 -- for information about using the hashed backend.
 
-authentication = "internal_plain"
+-- authentication = "internal_plain"
+authentication = "internal_hashed"
 
 -- Select the storage backend to use. By default Prosody uses flat files
 -- in its configured data directory, but it also supports more backends
@@ -121,14 +142,13 @@ authentication = "internal_plain"
 --sql = { driver = "MySQL", database = "prosody", username = "prosody", password = "secret", host = "localhost" }
 --sql = { driver = "PostgreSQL", database = "prosody", username = "prosody", password = "secret", host = "localhost" }
 
-
 -- Logging configuration
 -- For advanced logging see http://prosody.im/doc/logging
 log = {
-	info = "/var/log/prosody/prosody.log"; -- Change 'info' to 'debug' for verbose logging
-	error = "/var/log/prosody/prosody.err";
-	-- "*syslog"; -- Uncomment this for logging to syslog
-	-- "*console"; -- Log to the console, useful for debugging with daemonize=false
+    -- info = "prosody.log"; -- Change 'info' to 'debug' for verbose logging
+    -- error = "prosody.err";
+    "*syslog"; -- Uncomment this for logging to syslog
+    -- "*console"; -- Log to the console, useful for debugging with daemonize=false
 }
 
 ----------- Virtual hosts -----------
@@ -139,16 +159,16 @@ VirtualHost "jabber.twyk.org"
     enabled = true
 
 VirtualHost "example.com"
-	enabled = false -- Remove this line to enable this host
+    enabled = false -- Remove this line to enable this host
 
-	-- Assign this host a certificate for TLS, otherwise it would use the one
-	-- set in the global section (if any).
-	-- Note that old-style SSL on port 5223 only supports one certificate, and will always
-	-- use the global one.
-	ssl = {
-		key = "/etc/prosody/certs/example.com.key";
-		certificate = "/etc/prosody/certs/example.com.crt";
-	}
+    -- Assign this host a certificate for TLS, otherwise it would use the one
+    -- set in the global section (if any).
+    -- Note that old-style SSL on port 5223 only supports one certificate, and will always
+    -- use the global one.
+    ssl = {
+        key = "/etc/prosody/certs/example.com.key";
+        certificate = "/etc/prosody/certs/example.com.crt";
+    }
 
 ------ Components ------
 -- You can specify components to add hosts that provide special services,
@@ -156,7 +176,7 @@ VirtualHost "example.com"
 -- For more information on components, see http://prosody.im/doc/components
 
 ---Set up a MUC (multi-user chat) room server on conference.example.com:
---Component "conference.example.com" "muc"
+Component "conference.jabber..twyk.org" "muc"
 
 -- Set up a SOCKS5 bytestream proxy for server-proxied file transfers:
 Component "twyk.org" "proxy65"
