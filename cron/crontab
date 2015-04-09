@@ -1,5 +1,0 @@
-@daily cd /home/git-public/dotfiles && git fetch 
-@daily cd /home/git-public/dotfiles-server && git fetch
-@daily cd /home/git-public/hbro && git fetch
-@daily cd /home/git-public/hbro-contrib && git fetch
-@daily cd /home/git-public/zmqat && git fetch
