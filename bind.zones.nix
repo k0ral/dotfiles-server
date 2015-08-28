@@ -2,43 +2,43 @@
 
 let twykZone = ''
     $TTL 7200
-    $ORIGIN twyk.org.
+    $ORIGIN ${config.networking.domain}.
     @               IN      SOA     dns  mail (
-        2015020901 ; Serial
+        2015082802 ; Serial
         28800      ; Refresh
         1800       ; Retry
         604800     ; Expire - 1 week
         86400 )    ; Minimum
     
-    @               IN      NS      dns
+    @               IN      NS      ns
     @               IN      MX 10   mail
-    @               IN      A       82.235.211.42
-    @               IN      AAAA    2a01:e35:2ebd:32a0::2
+    @               IN      A       83.153.156.82
+    @               IN      AAAA    ${(builtins.elemAt config.networking.interfaces.enp2s0.ip6 0).address}
     ;@               IN      NS      ns.ovh.net
-    ;ns02            IN      A       2a01:e35:2ebd:32a0::2
+    ;ns02            IN      A       ${(builtins.elemAt config.networking.interfaces.enp2s0.ip6 0).address}
     ;@               IN      TXT     "v=spf1 mx"
     ;localhost       IN      A       127.0.0.1
     
-    mail            IN      A       82.235.211.42
-    mail            IN      AAAA    2a01:e35:2ebd:32a0::2
-    dns             IN      A       82.235.211.42
-    dns             IN      AAAA    2a01:e35:2ebd:32a0::2
-    ;ns2             IN      A       82.235.211.42
-    ;ns2             IN      AAAA    2a01:e35:2ebd:32a0::2
-    gitweb          IN      CNAME   twyk.org.
-    jabber          IN      CNAME   twyk.org.
-    kriss           IN      CNAME   twyk.org.
-    mpd             IN      CNAME   twyk.org.
-    roundcube       IN      CNAME   twyk.org.
-    shaarli         IN      CNAME   twyk.org.
-    www             IN      CNAME   twyk.org.
-    zerobin         IN      CNAME   twyk.org.
+    mail            IN      A       83.153.156.82
+    mail            IN      AAAA    ${(builtins.elemAt config.networking.interfaces.enp2s0.ip6 0).address}
+    ns              IN      A       83.153.156.82
+    ns              IN      AAAA    ${(builtins.elemAt config.networking.interfaces.enp2s0.ip6 0).address}
+    ns2             IN      A       83.153.156.82
+    ns2             IN      AAAA    ${(builtins.elemAt config.networking.interfaces.enp2s0.ip6 0).address}
+    gitweb          IN      CNAME   ${config.networking.domain}.
+    jabber          IN      CNAME   ${config.networking.domain}.
+    kriss           IN      CNAME   ${config.networking.domain}.
+    mpd             IN      CNAME   ${config.networking.domain}.
+    roundcube       IN      CNAME   ${config.networking.domain}.
+    shaarli         IN      CNAME   ${config.networking.domain}.
+    www             IN      CNAME   ${config.networking.domain}.
+    zerobin         IN      CNAME   ${config.networking.domain}.
     '';
 in {
   services.bind.zones = [
   {
-    file = pkgs.writeText "twyk.org.zone" twykZone;
+    file = pkgs.writeText "${config.networking.domain}.zone" twykZone;
     master = true;
-    name = "twyk.org";
+    name = config.networking.domain;
   } ];
 }

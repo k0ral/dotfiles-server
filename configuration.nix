@@ -41,8 +41,8 @@
   networking.hostId = "c35e1759";
   networking.hostName = "adama";
   networking.interfaces.enp2s0.ip4 = [ { address = "192.168.0.2"; prefixLength = 24; } ];
-  networking.interfaces.enp2s0.ip6 = [ { address = "2a01:e35:2ebd:32a0::2"; prefixLength = 64; } ];
-  networking.defaultGateway = "192.168.0.1";
+  networking.interfaces.enp2s0.ip6 = [ { address = "2a01:e35:3999:c520::3"; prefixLength = 64; } ];
+  networking.defaultGateway = "192.168.0.254";
   networking.domain = "twyk.org";
   networking.firewall.enable = false;
   networking.nameservers = [ "208.67.222.222" "208.67.220.220" "8.8.8.8" "8.8.4.4" ];
