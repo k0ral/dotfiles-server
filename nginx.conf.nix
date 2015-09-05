@@ -12,6 +12,9 @@
     index index.php index.htm index.html;
     autoindex off;
 
+    # Don't advertise the nginx version number
+    server_tokens off;
+
     # SSL
     ssl_certificate /etc/cert.pem;
     ssl_certificate_key /etc/key.pem;
@@ -30,19 +33,19 @@
     server {
         listen 7443 default_server ssl;
         listen [::]:7443 default_server ssl;
-        server_name twyk.org;
+        server_name ${config.networking.domain};
         root /home/http/public;
-        access_log /var/log/twyk.org;
-        error_log /var/log/twyk.org.error;
+        access_log /var/log/${config.networking.domain};
+        error_log /var/log/${config.networking.domain}.error;
     }
 
     server {
         listen 7443 ssl;
         listen [::]:7443 ssl;
-        server_name kriss.twyk.org;
+        server_name kriss.${config.networking.domain};
         root /home/http/kriss/;
-        access_log /var/log/kriss.twyk.org;
-        error_log /var/log/kriss.twyk.org.error;
+        access_log /var/log/kriss;
+        error_log /var/log/kriss.error;
 
         location ~ \.php$ {
             fastcgi_pass unix:/run/phpfpm/phpfpm.sock;
@@ -53,7 +56,7 @@
     server {
         listen 7443 ssl;
         listen [::]:7443 ssl;
-        server_name mpd.twyk.org;
+        server_name mpd.${config.networking.domain};
         access_log /var/log/mpd;
         error_log /var/log/mpd.error;
         
@@ -65,7 +68,7 @@
     server {
         listen 7443 ssl;
         listen [::]:7443 ssl;
-        server_name shaarli.twyk.org;
+        server_name shaarli.${config.networking.domain};
         root /home/http/shaarli/;
         access_log /var/log/shaarli;
         error_log /var/log/shaarli.error;
@@ -79,7 +82,7 @@
     server {
         listen 7443 ssl;
         listen [::]:7443 ssl;
-        server_name zerobin.twyk.org;
+        server_name zerobin.${config.networking.domain};
         root /home/http/zerobin/;
         access_log /var/log/zerobin;
         error_log /var/log/zerobin.error;
@@ -93,7 +96,7 @@
     server {
         listen 7443 ssl;
         listen [::]:7443 ssl;
-        server_name gitweb.twyk.org;
+        server_name gitweb.${config.networking.domain};
         root ${pkgs.git}/share/gitweb/;
         index gitweb.cgi;
         gzip off;
@@ -101,7 +104,10 @@
         error_log /var/log/gitweb.error;
         
         include ${pkgs.nginx}/conf/fastcgi_params;
-        fastcgi_param GITWEB_CONFIG /etc/gitweb.conf;
+        fastcgi_param GITWEB_CONFIG ${pkgs.writeText "gitweb.conf" ''
+          our $projectroot = "/home/git/";
+          our @git_base_url_list = qw(git://${config.networking.domain});
+          ''};
         fastcgi_index gitweb.cgi;
 
         location ~ ".gitweb.cgi" {
