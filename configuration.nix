@@ -43,7 +43,7 @@
   networking.interfaces.enp2s0.ip4 = [ { address = "192.168.0.2"; prefixLength = 24; } ];
   networking.interfaces.enp2s0.ip6 = [ { address = "2a01:e35:3999:c520::3"; prefixLength = 64; } ];
   networking.defaultGateway = "192.168.0.254";
-  networking.domain = "twyk.org";
+  networking.domain = "twyk.xyz";
   networking.firewall.enable = false;
   networking.nameservers = [ "208.67.222.222" "208.67.220.220" "8.8.8.8" "8.8.4.4" ];
   networking.tcpcrypt.enable = true;
@@ -82,7 +82,7 @@
 
   # icecast
   services.icecast.enable = true;
-  services.icecast.hostname = "mpd.twyk.org";
+  services.icecast.hostname = "mpd.${config.networking.domain}";
   #services.icecast.admin.password = "";
   services.icecast.extraConf = ''
     <mount type="normal">
@@ -146,7 +146,7 @@
   services.opensmtpd.serverConfiguration = ''
     listen on enp2s0
     table aliases file:/etc/aliases
-    accept from any for domain "twyk.org" alias <aliases> deliver to maildir
+    accept from any for domain "${config.networking.domain}" alias <aliases> deliver to maildir
     accept for any relay
     '';
 
@@ -169,20 +169,20 @@
 
   # Prosody
   services.prosody.enable = true;
-  services.prosody.admins = [ "koral@jabber.twyk.org" ];
+  services.prosody.admins = [ "koral@jabber.${config.networking.domain}" ];
   services.prosody.extraConfig = ''
     use_libevent = true
     s2s_require_encryption = true
     c2s_require_encryption = true
-    Component "conference.jabber.twyk.org" "muc"
-    Component "proxy.twyk.org" "proxy65"
-    Component "pubsub.twyk.org" "pubsub"
+    Component "conference.jabber.${config.networking.domain}" "muc"
+    Component "proxy.${config.networking.domain}" "proxy65"
+    Component "pubsub.${config.networking.domain}" "pubsub"
     '';
   services.prosody.extraModules = [ "private" "vcard" "privacy" "compression" "component" "muc" "pep" "adhoc" "lastactivity" "admin_adhoc" "blocklist"];
   services.prosody.ssl.cert = "/etc/cert.pem";
   services.prosody.ssl.key = "/etc/key.pem";
   services.prosody.virtualHosts.mainHost = {
-    domain = "jabber.twyk.org";
+    domain = "jabber.${config.networking.domain}";
     enabled = true;
   };
 

@@ -1,38 +1,44 @@
 { config, lib, pkgs, ... }:
 
-let twykZone = ''
+let ip4 = "83.153.156.82";
+    ip6 = (builtins.elemAt config.networking.interfaces.enp2s0.ip6 0).address;
+    domain = config.networking.domain;
+    twykZone = ''
     $TTL 7200
     $ORIGIN ${config.networking.domain}.
-    @               IN      SOA     dns  mail (
-        2015082802 ; Serial
+    @               IN      SOA     ns01.${domain}.  mail.${domain}. (
+        2015091101 ; Serial
         28800      ; Refresh
         1800       ; Retry
         604800     ; Expire - 1 week
         86400 )    ; Minimum
     
-    @               IN      NS      ns
-    @               IN      MX 10   mail
-    @               IN      A       83.153.156.82
-    @               IN      AAAA    ${(builtins.elemAt config.networking.interfaces.enp2s0.ip6 0).address}
-    ;@               IN      NS      ns.ovh.net
-    ;ns02            IN      A       ${(builtins.elemAt config.networking.interfaces.enp2s0.ip6 0).address}
-    ;@               IN      TXT     "v=spf1 mx"
+                    IN      NS      ns01
+                    IN      NS      ns02
+    
+                    IN      MX 10   mail
+    
+    @               IN      A       ${ip4}
+    @               IN      AAAA    ${ip6}
     ;localhost       IN      A       127.0.0.1
     
-    mail            IN      A       83.153.156.82
-    mail            IN      AAAA    ${(builtins.elemAt config.networking.interfaces.enp2s0.ip6 0).address}
-    ns              IN      A       83.153.156.82
-    ns              IN      AAAA    ${(builtins.elemAt config.networking.interfaces.enp2s0.ip6 0).address}
-    ns2             IN      A       83.153.156.82
-    ns2             IN      AAAA    ${(builtins.elemAt config.networking.interfaces.enp2s0.ip6 0).address}
-    gitweb          IN      CNAME   ${config.networking.domain}.
-    jabber          IN      CNAME   ${config.networking.domain}.
-    kriss           IN      CNAME   ${config.networking.domain}.
-    mpd             IN      CNAME   ${config.networking.domain}.
-    roundcube       IN      CNAME   ${config.networking.domain}.
-    shaarli         IN      CNAME   ${config.networking.domain}.
-    www             IN      CNAME   ${config.networking.domain}.
-    zerobin         IN      CNAME   ${config.networking.domain}.
+    mail            IN      A       ${ip4}
+    mail            IN      AAAA    ${ip6}
+    ns01            IN      A       ${ip4}
+    ns01            IN      AAAA    ${ip6}
+    ns02            IN      A       ${ip4}
+    ns02            IN      AAAA    ${ip6}
+    
+    imap            IN      CNAME   mail
+    smtp            IN      CNAME   mail
+    gitweb          IN      CNAME   ${domain}.
+    jabber          IN      CNAME   ${domain}.
+    kriss           IN      CNAME   ${domain}.
+    mpd             IN      CNAME   ${domain}.
+    roundcube       IN      CNAME   ${domain}.
+    shaarli         IN      CNAME   ${domain}.
+    www             IN      CNAME   ${domain}.
+    zerobin         IN      CNAME   ${domain}.
     '';
 in {
   services.bind.zones = [
