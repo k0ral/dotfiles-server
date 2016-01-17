@@ -7,7 +7,7 @@ let ip4 = "83.153.156.82";
     $TTL 7200
     $ORIGIN ${config.networking.domain}.
     @               IN      SOA     ns01.${domain}.  mail.${domain}. (
-        2015091101 ; Serial
+        2016011601 ; Serial
         28800      ; Refresh
         1800       ; Retry
         604800     ; Expire - 1 week
@@ -33,7 +33,7 @@ let ip4 = "83.153.156.82";
     smtp            IN      CNAME   mail
     gitweb          IN      CNAME   ${domain}.
     jabber          IN      CNAME   ${domain}.
-    kriss           IN      CNAME   ${domain}.
+    freshrss        IN      CNAME   ${domain}.
     mpd             IN      CNAME   ${domain}.
     roundcube       IN      CNAME   ${domain}.
     shaarli         IN      CNAME   ${domain}.

@@ -42,10 +42,10 @@
     server {
         listen 7443 ssl;
         listen [::]:7443 ssl;
-        server_name kriss.${config.networking.domain};
-        root /home/http/kriss/;
-        access_log /var/log/kriss;
-        error_log /var/log/kriss.error;
+        server_name freshrss.${config.networking.domain};
+        root /home/http/freshrss/;
+        access_log /var/log/freshrss;
+        error_log /var/log/freshrss.error;
 
         location ~ \.php$ {
             fastcgi_pass unix:/run/phpfpm/phpfpm.sock;
