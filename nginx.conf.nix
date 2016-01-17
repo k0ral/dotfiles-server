@@ -2,7 +2,6 @@
 
 {
     services.nginx.httpConfig = ''
-    include ${pkgs.nginx}/conf/mime.types;
     include ${pkgs.nginx}/conf/fastcgi.conf;
     include ${pkgs.nginx}/conf/fastcgi_params;
 
