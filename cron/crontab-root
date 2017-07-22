@@ -1,2 +1,0 @@
-@weekly /bin/chmod -R 755 /home/shared && /bin/chmod -R 775 /home/shared/music
-@daily /bin/chmod -R o-rwx /home/http
